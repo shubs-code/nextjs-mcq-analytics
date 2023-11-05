@@ -1,12 +1,11 @@
-import ResponsiveAppBar from "./_component/dashboard/ResponsiveAppBar";
+import ResponsiveAppBar from "@/component/dashboard/ResponsiveAppBar"
+import TakeTest from "@/component/test/TakeTest"
 
 export default function Home() {
   return (
     <>
       <ResponsiveAppBar/>
-      {/* // <main className="min-h-screen container py-12 px-8">
-      //   <h2 className="text-center text-lg">MCQ Analytics</h2>
-      // </main> */}
+      <TakeTest/>      
     </>
     
   
