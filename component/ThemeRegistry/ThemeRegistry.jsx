@@ -9,7 +9,7 @@ import { deepmerge } from '@mui/utils';
 
 export default function ThemeRegistry({ children }) {
 
-  const [mode, setMode] = React.useState<PalleteMode>('light');
+  const [mode, setMode] = React.useState('light');
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
