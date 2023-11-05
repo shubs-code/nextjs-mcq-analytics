@@ -11,6 +11,12 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
+
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import { useTheme } from '@mui/material/styles';
+import { ColorModeContext } from '../ThemeRegistry/theme';
+
 interface AppDrawerProps {
     state: boolean
     setState: (b: boolean) => void
@@ -18,6 +24,9 @@ interface AppDrawerProps {
 
 export default function AppDrawer({state, setState}:AppDrawerProps): React.JSX.Element {
 
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
+  
   const toggleDrawer =
     (open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -34,7 +43,7 @@ export default function AppDrawer({state, setState}:AppDrawerProps): React.JSX.E
 
   const list = (anchor= "left") => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer( false)}
       onKeyDown={toggleDrawer( false)}
@@ -50,26 +59,28 @@ export default function AppDrawer({state, setState}:AppDrawerProps): React.JSX.E
             </ListItemButton>
           </ListItem>
         ))}
+
+      <Divider/>
+
+        <ListItem  disablePadding>
+          <ListItemButton onClick={()=>{
+            console.log("toggle color mode")
+            colorMode.toggleColorMode()
+          }}>
+            <ListItemIcon>
+              {0 % 2 === 0 ? <LightModeIcon /> : <DarkModeIcon />}
+            </ListItemIcon>
+            <ListItemText primary={`${theme.palette.mode==="dark"?"Light":"Dark"} Theme`} />
+          </ListItemButton>
+        </ListItem>
+        
       </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+     </Box>
   );
 
   return (
     <Drawer
-        anchor={'left'}
+        anchor='left'
         open={state}
         onClose={toggleDrawer(false)}
         >
