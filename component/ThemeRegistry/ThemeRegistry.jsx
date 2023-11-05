@@ -2,19 +2,19 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import {darkTheme, lightTheme, ColorModeContext, getDesignTokens, getThemedComponents} from './theme';
+import { ColorModeContext, getDesignTokens, getThemedComponents} from './theme';
 import { deepmerge } from '@mui/utils';
 
 
 
-export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
+export default function ThemeRegistry({ children }) {
 
-  const [mode, setMode] = React.useState<string>('light');
+  const [mode, setMode] = React.useState<PalleteMode>('light');
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         console.log("theming")
-        setMode((prevMode:string) =>
+        setMode((prevMode) =>
           prevMode === 'light' ? 'dark' : 'light',
         );
       },
