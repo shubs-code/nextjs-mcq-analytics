@@ -13,7 +13,7 @@ const TakeTestButton = () => {
             router.push("/test")
         }}
     >
-        Hii Aksha
+        Take Test
     </Button>
   )
 }
