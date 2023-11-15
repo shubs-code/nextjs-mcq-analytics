@@ -1,76 +1,72 @@
 "use client"
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import workerSrc from "../../pdf-worker";
 
-import Fab from '@mui/material/Fab';
-import EditIcon from '@mui/icons-material/Edit';
-
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import FAB from"./_component/FAB"
+import PdfInput from"./_component/PdfInput"
+import Test from"./_component/Test"
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
+const initialState = {
+  numPages:null,
+  file:"",
+  takeTest:false,
+}
 
-export default function PDFViewer({inputfile}) {
-  const [file, setFile] = useState(inputfile??"");
-  const [numPages, setNumPages] = useState(null);
-
-  function onFileChange(event) {
-    setFile(event.target.files[0]);
-  }
-
+export default function PDFViewer({}) {
+  
+  const ref = useRef();
+  const [state, setState] = useState( initialState );
+  
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
-    setNumPages(nextNumPages);
+    setState({...state, numPages:nextNumPages})
   }
+
+  const setFile = (file)=>{
+    setState({...state, file})
+  }
+
+  useEffect(()=>{
+    document.body.classList.add('no-scrollbar');
+    return ()=>{
+      document.body.classList.remove('no-scrollbar');
+    }
+  },[])
 
   return (
-    <div className="">
+    <div className="" >
       {
-        !file && (
+        !state?.file && (
           <div className="min-h-screen flex items-center justify-center">
-            <Button component="label" variant="outlined" >
-              Open File
-              <VisuallyHiddenInput type="file" onChange={onFileChange} />
-            </Button>
+              <PdfInput setFile={setFile}/>
           </div>
         )
       }
-      <div>
+      <div ref={ref} >
         
         {
-          file && (
-            <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-            {Array.from({ length: numPages }, (_, index) => (
+          state?.file && (
+            <Document file={state?.file} onLoadSuccess={onDocumentLoadSuccess} >
+            {Array.from({ length: state.numPages }, (_, index) => (
               <Page
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
                 renderAnnotationLayer={false}
                 renderTextLayer={false}
+                width={ref.current?.offsetWidth}
               />
             ))}
           </Document>
           )
         }
- 
       </div>
-      <div className="fixed bottom-6 right-6">
-        <Fab color="secondry" aria-label="edit">
-          <EditIcon />
-        </Fab>
-      </div>
+      <FAB state={state} setState={setState}/>
+      {
+        state?.takeTest && <Test/>
+      }
     </div>
   );
 }
