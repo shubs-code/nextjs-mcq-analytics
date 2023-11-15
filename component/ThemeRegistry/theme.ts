@@ -18,32 +18,32 @@ const palette = {
 export const getDesignTokens = (mode:string) => ({
   palette: {
     mode,
-    // ...(mode === 'light'
-    //   ? {
-    //       primary: {
-    //         main: palette.light.primary.main,
-    //         light: palette.light.primary.light,
-    //         dark: palette.light.primary.dark,
-    //       },
+    ...(mode === 'light'
+      ? {
+          primary: {
+            main: palette.light.primary.main,
+            light: palette.light.primary.light,
+            dark: palette.light.primary.dark,
+          },
 
-    //       divider: amber[200],
-    //       text: {
-    //         primary: grey[900],
-    //         secondary: grey[800],
-    //       },
-    //     }
-    //   : {
-    //       primary: deepOrange,
-    //       divider: deepOrange[700],
-    //       background: {
-    //         default: deepOrange[900],
-    //         paper: deepOrange[900],
-    //       },
-    //       text: {
-    //         primary: '#fff',
-    //         secondary: grey[500],
-    //       },
-    //     }),
+          divider: amber[200],
+          text: {
+            primary: grey[900],
+            secondary: grey[800],
+          },
+        }
+      : {
+          primary: deepOrange,
+          divider: deepOrange[700],
+          background: {
+            default: deepOrange[900],
+            paper: deepOrange[900],
+          },
+          text: {
+            primary: '#fff',
+            secondary: grey[500],
+          },
+        }),
   },
   typography: {
     fontFamily: [
@@ -77,7 +77,7 @@ export const getThemedComponents = (mode:string) => ({
             styleOverrides: {
               root: {
                 borderRadius: 0,
-                color: common.white,
+                // color: common.white,
                 fontFamily:
                   "Oswald, Roboto, 'Helvetica Neue', Arial, sans-serif",
                 fontSize: 20,
@@ -114,16 +114,16 @@ export const getThemedComponents = (mode:string) => ({
               root: {},
             },
           },
-          MuiMenuItem: {
-            styleOverrides: {
-              root: {
-                color: common.white,
-                alignItems: 'stretch',
-                fontFamily:
-                  "Oswald, Roboto, 'Helvetica Neue', Arial, sans-serif",
-              },
-            },
-          },
+          // MuiMenuItem: {
+          //   styleOverrides: {
+          //     root: {
+          //       color: common.white,
+          //       alignItems: 'stretch',
+          //       fontFamily:
+          //         "Oswald, Roboto, 'Helvetica Neue', Arial, sans-serif",
+          //     },
+          //   },
+          // },
           MuiAccordion: {
             styleOverrides: {
               root: {
@@ -135,13 +135,13 @@ export const getThemedComponents = (mode:string) => ({
           },
         }
       : {
-          MuiAppBar: {
-            styleOverrides: {
-              colorPrimary: {
-                backgroundColor: blue[800],
-              },
-            },
-          },
+          // MuiAppBar: {
+          //   styleOverrides: {
+          //     colorPrimary: {
+          //       backgroundColor: blue[800],
+          //     },
+          //   },
+          // },
         }),
   },
 });
@@ -150,50 +150,5 @@ export const getThemedComponents = (mode:string) => ({
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {
     // This is intentional
-  },
-});
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-export const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-  typography: {
-    fontFamily: roboto.style.fontFamily,
-  },
-  components: {
-    MuiAlert: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.severity === 'info' && {
-            backgroundColor: '#60a5fa',
-          }),
-        }),
-      },
-    },
-  },
-});
-
-export const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-  typography: {
-    fontFamily: roboto.style.fontFamily,
-  },
-  components: {
-    MuiAlert: {
-      styleOverrides: {
-        root: ({ ownerState }) => ({
-          ...(ownerState.severity === 'info' && {
-            backgroundColor: '#60a5fa',
-          }),
-        }),
-      },
-    },
   },
 });

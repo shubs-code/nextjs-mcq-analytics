@@ -1,52 +1,72 @@
 "use client"
-import { useState } from "react";
-// import default react-pdf entry
+import { useState, useRef, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-// import pdf worker as a url, see `next.config.js` and `pdf-worker.js`
 import workerSrc from "../../pdf-worker";
+
+import FAB from"./_component/FAB"
+import PdfInput from"./_component/PdfInput"
+import Test from"./_component/Test"
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-export default function PDFViewer() {
-  const [file, setFile] = useState("");
-  const [numPages, setNumPages] = useState(null);
+const initialState = {
+  numPages:null,
+  file:"",
+  takeTest:false,
+}
 
-  function onFileChange(event) {
-    setFile(event.target.files[0]);
+export default function PDFViewer({}) {
+  
+  const ref = useRef();
+  const [state, setState] = useState( initialState );
+  
+  function onDocumentLoadSuccess({ numPages: nextNumPages }) {
+    setState({...state, numPages:nextNumPages})
   }
 
-  function onDocumentLoadSuccess({ numPages: nextNumPages }) {
-    setNumPages(nextNumPages);
-  } 
+  const setFile = (file)=>{
+    setState({...state, file})
+  }
+
+  useEffect(()=>{
+    document.body.classList.add('no-scrollbar');
+    return ()=>{
+      document.body.classList.remove('no-scrollbar');
+    }
+  },[])
 
   return (
-    <div>
+    <div className="" >
       {
-        !file && (
-          <div>
-            <label htmlFor="file">Load from file:</label>{" "}
-            <input onChange={onFileChange} type="file" />
-        </div>
+        !state?.file && (
+          <div className="min-h-screen flex items-center justify-center">
+              <PdfInput setFile={setFile}/>
+          </div>
         )
       }
-      <div>
+      <div ref={ref} >
         
         {
-          file && (
-            <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-            {Array.from({ length: numPages }, (_, index) => (
+          state?.file && (
+            <Document file={state?.file} onLoadSuccess={onDocumentLoadSuccess} >
+            {Array.from({ length: state.numPages }, (_, index) => (
               <Page
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
                 renderAnnotationLayer={false}
                 renderTextLayer={false}
+                width={ref.current?.offsetWidth}
               />
             ))}
           </Document>
           )
         }
- 
       </div>
+      <FAB state={state} setState={setState}/>
+      {
+        state?.takeTest && <Test/>
+      }
     </div>
   );
 }
