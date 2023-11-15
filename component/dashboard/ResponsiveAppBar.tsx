@@ -15,6 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AppDrawer from './AppDrawer';
 
+import { useSession, signIn, signOut } from "next-auth/react"
+
+
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -37,6 +40,7 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    signIn();
   };
 
   return (
