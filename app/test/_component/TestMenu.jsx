@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import TestInfo from '../_component//TestInfo';
 
-export default function BasicMenu() {
+export default function TestMenu({questionNumber, timeTaken, state}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,11 +20,15 @@ export default function BasicMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleTestSubmit = ()=>{
+    handleClose()
+    console.log(state.responseData)
+    
+  }
   return (
     <div>
       <div className='flex justify-between items-center pb-2'>
-        <TestInfo></TestInfo>
+        <TestInfo questionNumber={questionNumber} timeTaken={timeTaken} />
         <span className=''>
             <MenuIcon color='primary' onClick={handleClick} />
         </span>
@@ -41,7 +45,7 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleTestSubmit}>
             <ListItemIcon>
                 <TaskIcon fontSize="small" />
             </ListItemIcon>
