@@ -19,7 +19,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout', 'Login'];
 
 function ResponsiveAppBar() {
   const { data: session } = useSession();
@@ -43,7 +43,7 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = (userOption:string) => {
     if(userOption == settings[3]){
       signOut();
-    }else{
+    }else if(userOption == settings[4]){
       signIn();
     }
     setAnchorElUser(null);
@@ -143,7 +143,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={`${session?.user?.image}`} alt="Shubam Singh"  />
+                <Avatar src={`${session?.user?.image ?? ""}`} alt="Shubam Singh"  />
               </IconButton>
             </Tooltip>
             <Menu
@@ -162,11 +162,15 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{handleCloseUserMenu(setting)}}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {settings.map((setting) => {
+                if(session?.user && setting=="Login")return;
+                if(!session?.user && setting=="Logout")return;
+                return (
+                  <MenuItem key={setting} onClick={()=>{handleCloseUserMenu(setting)}}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                )
+              })}
             </Menu>
           </Box>
         </Toolbar>
