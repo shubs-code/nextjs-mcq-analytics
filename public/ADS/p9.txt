@@ -1,0 +1,112 @@
+#include <stdio.h>
+#define MAX 100
+int front = -1, rear = -1;
+int arr[MAX];
+void insertFront(int key) {
+  if ((front + 1) % MAX == rear) {
+    printf("Deque is full\n");
+    return;
+  }
+  if (front == -1) {
+    front = 0;
+    rear = 0;
+  } else {
+    front = (front + 1) % MAX;
+  }
+  arr[front] = key;
+}
+void insertRear(int key) {
+  if ((rear + 1) % MAX == front) {
+    printf("Deque is full\n");
+    return;
+  }
+  if (front == -1) {
+    front = 0;
+    rear = 0;
+  } else {
+    rear = (rear + 1) % MAX;
+  }
+  arr[rear] = key;
+}
+int deleteFront() {
+  if (front == -1) {
+    printf("Deque is empty\n");
+    return -1;
+  }
+  int element = arr[front];
+  front = (front + 1) % MAX;
+  if (front == rear) {
+    front = -1;
+    rear = -1;
+  }
+  return element;
+}
+int deleteRear() {
+  if (front == -1) {
+    printf("Deque is empty\n");
+    return -1;
+  }
+  int element = arr[rear];
+  rear = (rear - 1 + MAX) % MAX;
+  if (front == rear) {
+    front = -1;
+    rear = -1;
+  }
+  return element;
+}
+void display() {
+  if (front == -1) {
+    printf("Deque is empty\n");
+    return;  }
+  int i = front;
+  while (i != rear) {
+    printf("%d ", arr[i]);
+    i = (i + 1) % MAX;  }
+  printf("%d\n", arr[i]);  }
+int main() {
+  int choice, element;
+  do {
+    printf("\nDeque operations:\n");
+    printf("1. Insert at front\n");
+    printf("2. Insert at rear\n");
+    printf("3. Delete from front\n");
+    printf("4. Delete from rear\n");
+    printf("5. Display\n");
+    printf("6. Exit\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+    switch (choice) {
+      case 1:
+        printf("Enter the element to insert at front: ");
+        scanf("%d", &element);
+        insertFront(element);
+        break;
+      case 2:
+        printf("Enter the element to insert at rear: ");
+        scanf("%d", &element);
+        insertRear(element);
+        break;
+      case 3:
+        element = deleteFront();
+        if (element != -1) {
+          printf("Deleted element from front: %d\n", element);
+        }
+        break;
+      case 4:
+        element = deleteRear();
+        if (element != -1) {
+          printf("Deleted element from rear: %d\n", element);
+        }
+        break;
+      case 5:
+        display();
+        break;
+      case 6:
+        printf("Exiting...\n");
+        break;
+      default:
+        printf("Invalid choice!\n");
+    }
+  } while (choice != 6);
+  return 0;
+}

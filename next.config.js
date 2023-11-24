@@ -4,7 +4,16 @@ const nextConfig = {
            config.resolve.alias.canvas = false;
         
            return config;
-         },
-}
+    },
+    rewrites: async () => {
+      return [
+        {
+          source: "/ADS",
+          destination: "/ADS/index.html",
+        }
+      ]
+  }
+
+  }
 
 module.exports = nextConfig

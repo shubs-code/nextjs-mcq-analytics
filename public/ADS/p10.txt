@@ -1,0 +1,175 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+struct Node *head;
+void printList()
+{
+	struct Node *ptr = head;
+	printf("[");
+	while(ptr!=NULL)
+	{
+		printf("%d ",ptr->data);
+		ptr=ptr->next;
+	}
+	printf("]");
+}
+void insertatbeg(int data)
+{
+	struct Node *p = (struct Node*)malloc(sizeof(struct Node*));
+	p->data = data;
+	p->next = head;
+	head = p;
+}
+void insertatEnd(int data)
+{
+	struct Node *ptr=(struct Node*)malloc(sizeof(struct Node*));
+	ptr->data = data;
+	struct Node *p = head;
+	while(p->next != NULL)
+	{
+		p = p->next;
+	}
+	p->next = ptr;
+	ptr->next = NULL; 
+}
+void insertnode(int data)
+{
+	struct Node *ptr = (struct Node*)malloc(sizeof(struct Node*));
+	ptr->data =data;
+	struct Node *p = head;
+	while(p->data != 67)
+	{  p=p->next; }
+	ptr->next = p->next;
+	p->next = ptr;
+}
+void deleteatbig()
+{
+	struct Node *p;
+	p =head;
+	head = head->next;
+	free(p);
+}
+void deleteatEnd()
+{
+	struct Node *q;
+	struct Node *p = head;
+	while(p->next->next !=NULL)
+	{
+		p=p->next;
+	}
+	q = p->next;
+	p->next=NULL;
+	free(q);
+}
+int main()
+{
+	insertatbeg(67);
+	insertatbeg(7);
+	insertatbeg(55);
+	printf("\nAfter Insertion at bignning:");
+	printList();
+	insertatEnd(34);
+	insertatEnd(23);
+	printf("\nAfter Insertion at ending:");
+	printList();
+	insertnode(88);
+	printf("\nAfter Insertion after the node:");
+	printList();
+	deleteatbig();
+	printf("\nDeletion at begnning:");
+	printList();
+	deleteatEnd();
+	printf("\nDeletion at end:");
+	printList();
+}#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+struct Node *head;
+void printList()
+{
+	struct Node *ptr = head;
+	printf("[");
+	while(ptr!=NULL)
+	{
+		printf("%d ",ptr->data);
+		ptr=ptr->next;
+	}
+	printf("]");
+}
+void insertatbeg(int data)
+{
+	struct Node *p = (struct Node*)malloc(sizeof(struct Node*));
+	p->data = data;
+	p->next = head;
+	head = p;
+}
+void insertatEnd(int data)
+{
+	struct Node *ptr=(struct Node*)malloc(sizeof(struct Node*));
+	ptr->data = data;
+	struct Node *p = head;
+	while(p->next != NULL)
+	{
+		p = p->next;
+	}
+	p->next = ptr;
+	ptr->next = NULL; 
+}
+void insertnode(int data)
+{
+	struct Node *ptr = (struct Node*)malloc(sizeof(struct Node*));
+	ptr->data =data;
+	struct Node *p = head;
+	while(p->data != 67)
+	{  p=p->next; }
+	ptr->next = p->next;
+	p->next = ptr;
+}
+void deleteatbig()
+{
+	struct Node *p;
+	p =head;
+	head = head->next;
+	free(p);
+}
+void deleteatEnd()
+{
+	struct Node *q;
+	struct Node *p = head;
+	while(p->next->next !=NULL)
+	{
+		p=p->next;
+	}
+	q = p->next;
+	p->next=NULL;
+	free(q);
+}
+int main()
+{
+	insertatbeg(67);
+	insertatbeg(7);
+	insertatbeg(55);
+	printf("\nAfter Insertion at bignning:");
+	printList();
+	insertatEnd(34);
+	insertatEnd(23);
+	printf("\nAfter Insertion at ending:");
+	printList();
+	insertnode(88);
+	printf("\nAfter Insertion after the node:");
+	printList();
+	deleteatbig();
+	printf("\nDeletion at begnning:");
+	printList();
+	deleteatEnd();
+	printf("\nDeletion at end:");
+	printList();
+}
