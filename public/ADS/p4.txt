@@ -1,0 +1,37 @@
+#include <stdio.h>
+int a[10];
+int temp;
+int temp1;
+quick(int l,int h){
+     int pivot;
+        int i;
+        int j;
+    if(l<h){
+        pivot=l;
+        i=l;
+        j=h;
+        while(i<j){
+            while(a[i]<a[pivot]){
+                i++; }
+            while(a[j]>a[pivot]){
+                j--; }
+            if(i<j){
+                temp=a[i];
+                a[i]=a[j];
+                a[j]=temp;
+            }  }
+        temp1=a[pivot];
+        a[pivot]=a[j];
+        a[j]=temp1;
+        quick(l,j-1);
+        quick(j+1,h); 
+    }}
+void main() {
+    printf("Enter the Elements...\n");
+    for(int i=0;i<6;i++){
+        scanf("%d",&a[i]);}
+    quick(0,5);
+    printf("Sortedd Array...\n");
+    for(int i=0;i<6;i++){
+        printf("%d ",a[i]);  
+}

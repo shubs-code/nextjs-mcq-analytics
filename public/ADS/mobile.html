@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+.button {
+  background-color: rgb(253, 234, 234);
+  color: rgb(32, 209, 100);
+  border: none;
+  padding: 20px;
+  margin:  2% 10% 2% 10%;
+  width:80%;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10em;
+}
+.button1{
+  display: block;
+}
+.button2{
+  display: inline-block;
+  width:30%;
+  margin:1em 9.5% ;
+  background-color: rgb(253, 234, 234);
+  color: rgb(32, 209, 100);
+  font-size: 1.5rem;
+  overflow: hidden;
+}
+#textFrame{
+  display: none;
+}
+textarea{
+  margin-left: 10%;
+  width:80%;
+  height:70vh;
+}
+</style>
+</head>
+<body style="display:block;" onkeypress="keyPassword(event)" id = "root">
+<button class="button button1" id="b1">1-Data collection, curation, management couchdb(sofa)</button>
+<button class="button button1" id="b2">2-Data collection, curation, management mongodb</button>
+<button class="button button1" id="b3">3-Principal Component Analysis</button>
+<button class="button button1" id="b4">4-Clustering</button>
+<button class="button button1" id="b5">5-Time Series Forecasting</button>
+<button class="button button1" id="b6">6-Simple/Multiple Linear regression</button>
+<button class="button button1" id="b7">7-Logistic Regression</button>
+<button class="button button1" id="b8">8-Hyposthesis Testing</button>
+<button class="button button1" id="b9">9-Analysis of Variance</button>
+<button class="button button1" id="b0">10-Decison Tree</button>
+<div id = textFrame>
+  <textarea id="textArea" >Loading Data...</textarea>
+  <button class="button button2" id="copy">copy</button>
+  <button class="button button2" id="close">close</button>
+</div>
+<script>
+  const buttons = document.getElementsByClassName("button1")
+  document.getElementById("close").addEventListener("click", function () {
+      closeTextArea()
+    });
+  document.getElementById("copy").addEventListener("click", function () {
+    document.querySelector("textarea").select();
+    document.execCommand('copy');
+  });
+  for(const element of buttons){
+    element.addEventListener("click", function () {
+      openTextArea(event.srcElement.id);
+    });
+  }
+
+  function openTextArea(id){
+    for(const element of buttons){
+      element.style.display = "none"
+    }
+    document.getElementById(id).style.display = "block"
+    document.getElementById("textFrame").style.display = "block";
+    let path = String(id)[1]+".txt"
+    loadFile(path)
+
+  }
+  function closeTextArea(){
+    document.getElementById("textFrame").style.display = "none";
+    document.getElementById("textArea").value = "Loading Data...";
+    for(const element of buttons){
+      element.style.display = "block"
+    }
+  }
+  function loadFile(path) {
+    var xmlhttp = new XMLHttpRequest();
+    var url = path;
+
+    xmlhttp.onreadystatechange = function() {
+
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        document.getElementById("textArea").value = xmlhttp.responseText;
+        console.log(xmlhttp.responseText);
+        console.log("xmlhttp Request Accepted");
+    }
+
+
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
+  var passkey = ""
+  function keyPassword(_event){
+    if(passkey == "hello"){
+      return; 
+    }passkey += _event.key;
+    if(passkey == "hello"){
+      document.getElementById("root").style.display = "block"
+    }
+  }
+</script>
+
+</body>
+</html>
