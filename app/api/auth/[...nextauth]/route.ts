@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from "next-auth/providers/github";
 
@@ -11,7 +12,7 @@ import { db } from "@/lib/db";
 const prisma = new PrismaClient()
 
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
@@ -23,15 +24,15 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
+      clientId: process.env.GOOGLE_ID ?? "",
+      clientSecret: process.env.GOOGLE_SECRET ?? ""
     }),
     // Passwordless / email sign in
   ],
   callbacks: {
     async session({ token, session }) {
       if (token) {
-        session.user.id = token.id;
+        session.user.id = token.id ;
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.image = token.picture;
