@@ -134,18 +134,28 @@ function ResponsiveAppBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
-              >
+                >
                 {page}
               </Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={`${session?.user?.image ?? ""}`} alt="Shubam Singh"  />
-              </IconButton>
-            </Tooltip>
+            {
+              session?.user?(
+                <Tooltip title="Profile Options">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar src={`${session?.user?.image ?? ""}`} alt="Shubam Singh"  />
+                  </IconButton>
+                </Tooltip>
+              ):(
+                <Button variant='contained' color='primary' size='small'
+                  sx={{borderRadius:"6%"}}
+                  onClick={()=>{signIn()}}
+                > Login</Button>
+              )
+            }
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
