@@ -35,6 +35,9 @@ export default function PDFViewer({}) {
       document.body.classList.remove('no-scrollbar');
     }
   },[])
+  const endTest = ()=>{
+    setState({...state, takeTest:false})
+  }
 
   return (
     <div className="" >
@@ -65,7 +68,7 @@ export default function PDFViewer({}) {
       </div>
       <FAB state={state} setState={setState}/>
       {
-        state?.takeTest && <Test/>
+        state?.takeTest && <Test endTest={endTest}/>
       }
     </div>
   );

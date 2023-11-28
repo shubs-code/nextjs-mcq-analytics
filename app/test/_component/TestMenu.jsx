@@ -9,9 +9,11 @@ import TimerOffIcon from '@mui/icons-material/TimerOff';
 import TaskIcon from '@mui/icons-material/Task';
 import CloseIcon from '@mui/icons-material/Close';
 
-import TestInfo from '../_component//TestInfo';
+import TestInfo from '../_component/TestInfo';
 
-export default function TestMenu({questionNumber, timeTaken, state}) {
+import {AddTestData} from "@/lib/reactApi/test"
+
+export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,10 +22,14 @@ export default function TestMenu({questionNumber, timeTaken, state}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleTestSubmit = ()=>{
+  const handleTestSubmit = async ()=>{
     handleClose()
     console.log(state.responseData)
-    
+    const response = await AddTestData("testing", state.responseData)
+    console.log(response)
+    if(response?.id){
+      endTest();
+    }
   }
   return (
     <div>

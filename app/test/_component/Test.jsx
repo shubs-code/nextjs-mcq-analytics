@@ -23,7 +23,7 @@ const timer = (state, setState)=>{
   newResponseData[state.currentQuestionIndex].timeTaken +=1;
   setState({...state, responseData: newResponseData})  
 }
-const Test = () => {
+const Test = ({endTest}) => {
 
   const [state, setState] = useState(initialTestState)
   const [timerActive, setTimerActive] = useState(true);
@@ -61,7 +61,7 @@ const Test = () => {
   return (
   <div className='fixed bottom-4 right-4 w-64 '>
     <Paper elevation={4} className='h-full p-4 pt-2 rounded-lg '>
-      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} />
+      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} endTest={endTest}/>
         <div className=''>
           <div className='grid grid-cols-2 gap-2 '>
             <Button variant='outlined' size='small' disabled={currentResponse.selectedOption=="A"} onClick={()=>{setResponse("A")}} >
