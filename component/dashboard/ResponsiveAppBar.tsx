@@ -16,14 +16,15 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AppDrawer from './AppDrawer';
 
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout', 'Login'];
+const settings = ['My Tests', 'Analytics', 'Logout', 'Login'];
 
 function ResponsiveAppBar() {
   const { data: session } = useSession();
-
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [drawerState, setDrawerState] = React.useState<boolean >(false);
@@ -41,10 +42,12 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseUserMenu = (userOption:string) => {
-    if(userOption == settings[3]){
+    if(userOption == "Logout"){
       signOut();
-    }else if(userOption == settings[4]){
+    }else if(userOption == "Login"){
       signIn();
+    }else if(userOption == "My Tests"){
+      router.push("/dashboard/tests");
     }
     setAnchorElUser(null);
   };
