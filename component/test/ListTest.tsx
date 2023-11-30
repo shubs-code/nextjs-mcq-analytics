@@ -10,7 +10,7 @@ export default function ListTest() {
   return (
     <List className='w-full ' >
         {
-          [1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4].map(()=><TestListItem/>)
+          [1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4].map((item, i)=><TestListItem key={i} />)
         }
     </List>
   );
@@ -18,8 +18,8 @@ export default function ListTest() {
 
 const TestListItem = ()=>{
 
-    return (
-        <ListItemButton  divider>
+  return (
+        <ListItemButton divider>
             <ListItemText primary="Drafts" />
         </ListItemButton>
     )
