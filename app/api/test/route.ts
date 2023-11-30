@@ -24,7 +24,7 @@ export async function GET(req:NextRequest, context:any) {
   const offset:number = parseInt( params?.offset ?? 0);
   const limit:number = parseInt( params?.limit ?? 10);
 
-  console.log(offset, limit)
+  
   const result = await TestHandler.getTests(userId, offset, limit)
   return NextResponse.json({
     offset:offset,

@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 
-export default function ListTest({tests}:{tests:any}) {
+export default function ListTest({tests,loading}:{tests:any,loading:boolean}) {
   return (
     <List className='w-full ' >
         {

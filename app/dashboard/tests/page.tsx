@@ -10,12 +10,11 @@ const Tests = () => {
   const router = useRouter();
   const { data: session  } = useSession();
 
-  const [testInfo, setTestInfo] = useState({tests:[], pageNumber:1, pageCount:1, loading:true})
-  const tests = [0,1,2,3,4,5,6,7,8,0,1,2,3,4,5,6,7,8]
+  const [testInfo, setTestInfo] = useState({tests:[],limit:10 ,pageNumber:1, pageCount:1, loading:true})
 
   useEffect(()=>{
     if(session?.user?.name){
-      fetch("/api/test",{
+      fetch(`/api/test?offset=${testInfo.limit*(testInfo.pageNumber-1)}`,{
         method:"GET",
         credentials:"include"
       })
@@ -24,6 +23,7 @@ const Tests = () => {
       })
       .then((data)=>{
         console.log(data)
+        setTestInfo({ ...testInfo, tests:data.tests, pageCount:Math.ceil(data.count/testInfo.limit), loading:false})
       })
       .catch((err)=>{
         console.log(err)
@@ -31,16 +31,20 @@ const Tests = () => {
     }else {
       router.push("/dashboard")
     }
-  },[session])
+  },[session, testInfo.pageNumber])
   return (
     <>
         <div className="h-0 grow overflow-clip overflow-y-auto no-scrollbar">
-            <ListTest tests={tests} />
+            <ListTest tests={testInfo.tests} loading={testInfo.loading}/>
         </div>
         <div className='flex items-center justify-center my-2 sm:my-4'>
           <Pagination disabled={testInfo.loading} count={testInfo.pageCount} variant="outlined" 
             onChange={(event, page)=>{
-              console.log(page)
+              if(page == testInfo.pageNumber){
+                return;
+              }else{
+                setTestInfo({...testInfo, pageNumber:page, loading:true});
+              }
             }}
           />
         </div>
