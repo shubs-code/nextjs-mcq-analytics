@@ -23,8 +23,9 @@ const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['My Tests', 'Analytics', 'Logout', 'Login'];
 
 function ResponsiveAppBar() {
-  const { data: session } = useSession();
   const router = useRouter();
+  const { data: session } = useSession();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [drawerState, setDrawerState] = React.useState<boolean >(false);
@@ -145,17 +146,12 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             {
-              session?.user?(
+              (
                 <Tooltip title="Profile Options">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar src={`${session?.user?.image ?? ""}`} alt="Shubam Singh"  />
+                    <Avatar src={`${session?.user?.image ?? ""}`} alt="Shubam Singh" />
                   </IconButton>
                 </Tooltip>
-              ):(
-                <Button variant='contained' color='primary' size='small'
-                  sx={{borderRadius:"6%"}}
-                  onClick={()=>{signIn()}}
-                > Login</Button>
               )
             }
 
@@ -177,7 +173,7 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => {
                 if(session?.user && setting=="Login")return;
-                if(!session?.user && setting=="Logout")return;
+                if(!session?.user && setting!="Login")return;
                 return (
                   <MenuItem key={setting} onClick={()=>{handleCloseUserMenu(setting)}}>
                     <Typography textAlign="center">{setting}</Typography>
