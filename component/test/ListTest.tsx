@@ -4,6 +4,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import ListItemButton from '@mui/material/ListItemButton';
 
 export default function ListTest() {
   return (
@@ -18,8 +19,8 @@ export default function ListTest() {
 const TestListItem = ()=>{
 
     return (
-        <ListItem button divider>
+        <ListItemButton  divider>
             <ListItemText primary="Drafts" />
-        </ListItem>
+        </ListItemButton>
     )
 }
