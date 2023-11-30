@@ -3,14 +3,19 @@ import { db } from "../db"
 
 const TestHandler = {
     getTests:async(userId:string, offset:number, limit:number)=>{
-        const userTests = await db.test.findMany({
-            where:{
-              authorId:userId
-            },
-            skip:offset,
-            take:limit,
-        })
-        return userTests;
+      const query = {
+        where:{
+          authorId:userId
+        },
+        skip:offset,
+        take:limit,
+      }
+      const [tests, count] = await db.$transaction([
+        db.test.findMany(query),
+        db.test.count({ where: query.where })
+      ]);
+
+      return {tests,count};
     },
     createTest:async(userId:string, name:string, total_questions:number, skipped_questions:number,test_data:any)=>{
       const createdTest = await db.test.create({

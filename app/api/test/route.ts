@@ -26,7 +26,12 @@ export async function GET(req:NextRequest, context:any) {
 
   console.log(offset, limit)
   const result = await TestHandler.getTests(userId, offset, limit)
-  return NextResponse.json(result);
+  return NextResponse.json({
+    offset:offset,
+    limit:limit,
+    tests:result.tests,
+    count:result.count
+  });
 }
 
 export async function POST(req:NextRequest, context:any) {
