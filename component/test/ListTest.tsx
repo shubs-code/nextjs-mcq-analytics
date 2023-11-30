@@ -6,11 +6,11 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 
-export default function ListTest() {
+export default function ListTest({tests}:{tests:any}) {
   return (
     <List className='w-full ' >
         {
-          [1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4].map((item, i)=><TestListItem key={i} />)
+          tests?.map((item:any, i:number)=><TestListItem key={i} />)
         }
     </List>
   );
