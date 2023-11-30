@@ -3,7 +3,7 @@ import ListTest from '@/component/test/ListTest';
 import Pagination from '@mui/material/Pagination'
 import React,{useEffect, useState} from 'react'
 
-const page = () => {
+const Tests = () => {
   const [dataLoading, setDataLoading] = useState(false);
   return (
     <>
@@ -17,4 +17,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Tests
