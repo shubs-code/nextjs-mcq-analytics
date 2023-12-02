@@ -10,7 +10,7 @@ const TestHandler = {
       }
       const [tests, count] = await db.$transaction([
         db.test.findMany({
-          orderBy:[{createdAt:"desc"}],
+          orderBy:[{id:"desc"}],
           where:query.where,
           skip:offset,
           take:limit,
