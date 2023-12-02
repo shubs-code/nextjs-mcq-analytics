@@ -7,11 +7,14 @@ const TestHandler = {
         where:{
           authorId:userId
         },
-        skip:offset,
-        take:limit,
       }
       const [tests, count] = await db.$transaction([
-        db.test.findMany(query),
+        db.test.findMany({
+          orderBy:[{createdAt:"desc"}],
+          where:query.where,
+          skip:offset,
+          take:limit,
+        }),
         db.test.count({ where: query.where })
       ]);
 
