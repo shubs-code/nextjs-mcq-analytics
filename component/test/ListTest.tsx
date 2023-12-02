@@ -31,28 +31,29 @@ const TestListItem = ({test}:{test:any})=>{
       divider
     >
       <ListItemButton role={undefined} onClick={()=>{}}>
-        <ListItemIcon
-            hidden={true}
+        {
+          false && (
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={true}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ 'aria-labelledby': "test" }}
+              />
+            </ListItemIcon>
+          )
+        }
         
-        >
-          <Checkbox
-            edge="start"
-            checked={true}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': "test" }}
-          />
-        </ListItemIcon>
         <ListItemText >
           <div className='flex justify-between line-clamp-1'>
-            {test.name} 
+            {test.name}
             <span style={{color:"rgb(148 163 184)",display:"flex", fontSize:"0.8rem"}}>
                {test.createdAt.substr(0,10)}
             </span>
           </div>
           <div className='flex  gap-2' style={{color:"rgb(148 163 184)",display:"flex", fontSize:"0.8rem"}}>
             <span style={{width:"10em"}}>Questions <span>{test.correct_answers}/{test.total_questions}</span></span>
-            
           </div>
         </ListItemText>
       </ListItemButton>
