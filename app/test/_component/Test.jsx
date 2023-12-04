@@ -58,10 +58,16 @@ const Test = ({endTest}) => {
     }
   }
 
+  const _endTest = ()=>{
+    
+    setState(initialTestState)
+    endTest()
+  }
+
   return (
   <div className='fixed bottom-4 right-4 w-64 '>
     <Paper elevation={4} className='h-full p-4 pt-2 rounded-lg '>
-      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} endTest={endTest}/>
+      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} endTest={_endTest}/>
         <div className=''>
           <div className='grid grid-cols-2 gap-2 '>
             <Button variant='outlined' size='small' disabled={currentResponse.selectedOption=="A"} onClick={()=>{setResponse("A")}} >

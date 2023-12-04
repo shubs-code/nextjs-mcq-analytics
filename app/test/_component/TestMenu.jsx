@@ -22,6 +22,9 @@ export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleTestExit = ()=>{
+    endTest()
+  }
   const handleTestSubmit = async ()=>{
     handleClose()
     console.log(state.responseData)
@@ -63,7 +66,7 @@ export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
             </ListItemIcon>
             Stop Timer
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleTestExit}>
             <ListItemIcon>
                 <CloseIcon fontSize="small" />
             </ListItemIcon>
