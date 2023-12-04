@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['My Tests', 'Analytics', 'Logout', 'Login'];
+const settings = ['Take Test', 'My Tests', 'Analytics', 'Logout', 'Login'];
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -49,7 +49,10 @@ function ResponsiveAppBar() {
       signIn();
     }else if(userOption == "My Tests"){
       router.push("/dashboard/tests");
+    }else if(userOption == 'Take Test'){
+      router.push("/test");
     }
+    
     setAnchorElUser(null);
   };
 
@@ -57,13 +60,15 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <EqualizerIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+
+          <EqualizerIcon onClick={()=>{router.push("/dashboard")}} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
+            onClick={()=>{router.push("/dashboard")}}
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
+              cursor:"pointer",
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
@@ -74,7 +79,8 @@ function ResponsiveAppBar() {
             }}
           >
             Analytics
-          </Typography>
+          </Typography>  
+          
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

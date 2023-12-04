@@ -8,10 +8,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import { useRouter } from 'next/navigation';
 
-const FAB_ACTIONS = ["Take test", "Refresh PDF", "Open Pdf"];
+const FAB_ACTIONS = ["Take test", "Refresh", "Open Pdf", "Dashboard"];
 
 const FAB = ({state, setState}) => {
+    const router = useRouter()
     const [anchorElActions, setAnchorElActions] = useState(null);
     const handleOpenFAB = (event) => {
         setAnchorElActions(event.target);
@@ -33,6 +35,10 @@ const FAB = ({state, setState}) => {
             }
             case FAB_ACTIONS[2]:{
                 break;
+            }
+            case FAB_ACTIONS[3]:{
+              router.push("dashboard")
+              break;
             }
             default:{
                 console.log(itemName)
