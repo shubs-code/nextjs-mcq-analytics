@@ -14,7 +14,7 @@ import TestInfo from '../_component/TestInfo';
 import {AddTestData} from "@/lib/reactApi/test"
 
 
-export default function TestMenu({questionNumber, timeTaken, state, endTest, timerActive, setTimerActive}) {
+export default function TestMenu({testName, questionNumber, timeTaken, state, endTest, timerActive, setTimerActive}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -37,7 +37,7 @@ export default function TestMenu({questionNumber, timeTaken, state, endTest, tim
   const handleTestSubmit = async ()=>{
     handleClose()
     console.log(state.responseData)
-    const response = await AddTestData("testing", state.responseData)
+    const response = await AddTestData(testName, state.responseData)
     console.log(response)
     if(response?.id){
       endTest();

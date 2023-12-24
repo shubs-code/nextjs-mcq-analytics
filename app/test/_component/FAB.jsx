@@ -9,12 +9,15 @@ import MenuItem from '@mui/material/MenuItem';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
+import TestNameInput from '@/component/test/TestNameInput';
 
 const FAB_ACTIONS = ["Take test", "Refresh", "Open Pdf", "Dashboard"];
 
 const FAB = ({state, setState}) => {
     const router = useRouter()
     const [anchorElActions, setAnchorElActions] = useState(null);
+    const [nameModalOpen, setNameModalOpen] = useState(false);
+
     const handleOpenFAB = (event) => {
         setAnchorElActions(event.target);
     };
@@ -23,27 +26,37 @@ const FAB = ({state, setState}) => {
         setAnchorElActions(null);
     };
 
+    const handleNameModalInput = (response)=>{
+      if(response.hasInput){
+        console.log("FAB",response.input)
+        setState({...state, testName:response.input , takeTest:true})
+        setNameModalOpen(false);
+      }else{
+        setNameModalOpen(false);
+      }
+    }
+
     const handleMenuItemSelected = (itemName) => {
-        handleCloseFAB();
-        switch(itemName){
-            case FAB_ACTIONS[0]:{
-                setState({...state, takeTest:true})
-                break;
-            }
-            case FAB_ACTIONS[1]:{
-                break;
-            }
-            case FAB_ACTIONS[2]:{
-                break;
-            }
-            case FAB_ACTIONS[3]:{
-              router.push("dashboard")
-              break;
-            }
-            default:{
-                console.log(itemName)
-            }
+      handleCloseFAB();
+      switch(itemName){
+        case FAB_ACTIONS[0]:{
+            setNameModalOpen(true);
+            break;
         }
+        case FAB_ACTIONS[1]:{
+            break;
+        }
+        case FAB_ACTIONS[2]:{
+            break;
+        }
+        case FAB_ACTIONS[3]:{
+          router.push("dashboard")
+          break;
+        }
+        default:{
+            console.log(itemName)
+        }
+      }
     };
 
   return (
@@ -75,6 +88,7 @@ const FAB = ({state, setState}) => {
             </MenuItem>
           ))}
         </Menu>
+        <TestNameInput open={nameModalOpen} onInterrupt={handleNameModalInput}/>
       </div>
   )
 }

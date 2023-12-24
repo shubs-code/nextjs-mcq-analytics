@@ -14,6 +14,7 @@ const initialState = {
   numPages:null,
   file:"",
   takeTest:false,
+  testName:"testing",
 }
 
 export default function PDFViewer({}) {
@@ -68,7 +69,7 @@ export default function PDFViewer({}) {
       </div>
       <FAB state={state} setState={setState}/>
       {
-        state?.takeTest && <Test endTest={endTest}/>
+        state?.takeTest && <Test testName={state.testName} endTest={endTest}/>
       }
     </div>
   );
