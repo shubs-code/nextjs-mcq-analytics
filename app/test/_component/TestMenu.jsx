@@ -13,7 +13,8 @@ import TestInfo from '../_component/TestInfo';
 
 import {AddTestData} from "@/lib/reactApi/test"
 
-export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
+
+export default function TestMenu({questionNumber, timeTaken, state, endTest, timerActive, setTimerActive}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,6 +25,14 @@ export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
   };
   const handleTestExit = ()=>{
     endTest()
+  }
+  const handleTimerStop = ()=>{
+    setTimerActive(false)
+    handleClose()
+  }
+  const handleTimerStart = ()=>{
+    setTimerActive(true)
+    handleClose()
   }
   const handleTestSubmit = async ()=>{
     handleClose()
@@ -60,12 +69,22 @@ export default function TestMenu({questionNumber, timeTaken, state, endTest}) {
             </ListItemIcon>
             Complete Test
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        {
+          timerActive?<MenuItem onClick={handleTimerStop}>
             <ListItemIcon>
                 <TimerOffIcon fontSize="small" />
             </ListItemIcon>
             Stop Timer
+        </MenuItem>:
+        <MenuItem onClick={handleTimerStart}>
+            <ListItemIcon>
+                <TimerOffIcon fontSize="small" />
+            </ListItemIcon>
+            Start Timer
         </MenuItem>
+
+        }
+        
         <MenuItem onClick={handleTestExit}>
             <ListItemIcon>
                 <CloseIcon fontSize="small" />

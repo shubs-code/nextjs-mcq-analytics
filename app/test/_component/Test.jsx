@@ -21,8 +21,9 @@ const initialTestState = {
 const timer = (state, setState)=>{
   const newResponseData  = [ ...state.responseData ];
   newResponseData[state.currentQuestionIndex].timeTaken +=1;
-  setState({...state, responseData: newResponseData})  
+  setState({...state, responseData: newResponseData})
 }
+
 const Test = ({endTest}) => {
 
   const [state, setState] = useState(initialTestState)
@@ -32,10 +33,14 @@ const Test = ({endTest}) => {
 
   
   useEffect(() => {
+    console.log("setting time out")
     const interval = setTimeout(() => timerActive && timer(state, setState), 1000);
     
-    return () => clearTimeout(interval);
-  }, [currentResponse.timeTaken]);
+    return () => {
+    console.log("unsetting time out")
+    clearTimeout(interval);
+    }
+  }, [currentResponse.timeTaken, state.currentQuestionIndex]);
 
   const setResponse = (selectedOption)=>{
     const newResponseData  = [ ...state.responseData ];
@@ -67,7 +72,7 @@ const Test = ({endTest}) => {
   return (
   <div className='fixed bottom-4 right-4 w-64 '>
     <Paper elevation={4} className='h-full p-4 pt-2 rounded-lg '>
-      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} endTest={_endTest}/>
+      <TestMenu questionNumber={state.currentQuestionIndex+1} timeTaken={currentResponse.timeTaken } state={state} endTest={_endTest} timerActive={timerActive} setTimerActive={setTimerActive} />
         <div className=''>
           <div className='grid grid-cols-2 gap-2 '>
             <Button variant='outlined' size='small' disabled={currentResponse.selectedOption=="A"} onClick={()=>{setResponse("A")}} >
